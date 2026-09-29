@@ -5,12 +5,14 @@ package com.amazonaws.samples.appconfig.utils;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Encoder {
 
-    Logger logger = Logger.getLogger(Encoder.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(Encoder.class);
 
     private String unUsedVariable;
 
@@ -20,7 +22,7 @@ public class Encoder {
         String unused = "ast-grep unused string example";
         Calendar calendar = new GregorianCalendar(1999, Calendar.JANUARY, 1);
         defaultDate = calendar.getTime();
-        System.out.println("test ast-grep "+defaultDate);
+        logger.debug("Initializing Encoder with defaultDate: {}", defaultDate);
     }
 
     byte[] bytes = new byte[57];

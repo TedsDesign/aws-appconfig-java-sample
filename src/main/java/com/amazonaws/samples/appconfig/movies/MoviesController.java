@@ -23,15 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software.amazon.awssdk.services.appconfig.AppConfigClient;
 import software.amazon.awssdk.services.appconfig.model.GetConfigurationResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class MoviesController {
-    private static final Logger logger = LogManager.getLogger(MoviesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MoviesController.class);
 
     /**
      * Static Movie Array containing all the list of Movies.
@@ -83,10 +83,10 @@ public class MoviesController {
         final String appConfigResponse = response.content().asUtf8String();
 
         final JSONObject jsonResponseObject = new JSONObject(appConfigResponse);
-        System.out.println("json is "+jsonResponseObject);
+        logger.debug("Processing AppConfig response in movie() method: {}", jsonResponseObject);
 
         JSONArray moviesArray = jsonResponseObject.getJSONArray("movies");
-        System.out.println("movies array is "+moviesArray);
+        logger.debug("Movies array in movie() method: {}", moviesArray);
         List<Movie> movieList = new ArrayList<>();
         for (int i = 0; i < moviesArray.length(); i++) {
             JSONObject movieObj = moviesArray.getJSONObject(i);
@@ -129,10 +129,10 @@ public class MoviesController {
         final String appConfigResponse = response.content().asUtf8String();
 
         final JSONObject jsonResponseObject = new JSONObject(appConfigResponse);
-        System.out.println("json is "+jsonResponseObject);
+        logger.debug("Processing AppConfig response in processUpdateMovie() method: {}", jsonResponseObject);
 
         JSONArray moviesArray = jsonResponseObject.getJSONArray("movies");
-        System.out.println("movies array is "+moviesArray);
+        logger.debug("Movies array in processUpdateMovie() method: {}", moviesArray);
         List<Movie> movieList = new ArrayList<>();
         for (int i = 0; i < moviesArray.length(); i++) {
             JSONObject movieObj = moviesArray.getJSONObject(i);
